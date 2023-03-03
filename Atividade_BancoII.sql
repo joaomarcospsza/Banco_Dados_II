@@ -14,7 +14,7 @@ CONSTRAINT cliente_pk PRIMARY KEY (id_cliente)
 CREATE TABLE servicos(
 id_servicos INT NOT NULL AUTO_INCREMENT,
 nome_servico VARCHAR(255) NOT NULL,
-valor_servico DECIMAL(6,2) NOT NULL,
+valor_servico DECIMAL NOT NULL,
 CONSTRAINT servico_pk PRIMARY KEY(id_servicos)
 );
 
@@ -42,3 +42,21 @@ INSERT INTO servicos (nome_servico, valor_servico) VALUES ('Troca de peça queim
 INSERT INTO servicos (nome_servico, valor_servico) VALUES ('Instalação de Internet', 150.00);
 INSERT INTO servicos (nome_servico, valor_servico) VALUES ('Montagem do Computador',  85.00);
 
+-- Inserindo DADOS na TABELA servico_por_cliente - DML, comandos de armazenamento 
+INSERT INTO servico_por_cliente (id_cliente, id_servicos) VALUES (1,2);
+INSERT INTO servico_por_cliente (id_cliente, id_servicos) VALUES (4,3);
+INSERT INTO servico_por_cliente (id_cliente, id_servicos) VALUES (3,4);
+INSERT INTO servico_por_cliente (id_cliente, id_servicos) VALUES (2,5);
+INSERT INTO servico_por_cliente (id_cliente, id_servicos) VALUES (5,1);
+
+-- SELECT com INNER JOIN - DML, comandos de armazenamento 
+SELECT c.nome "Nome Cliente", s.nome_servico "Nome Serviço", s.valor_servico "Valor Serviço"
+FROM servico_por_cliente sc
+INNER JOIN clientes c ON sc.id_cliente = c.id_cliente
+INNER JOIN servicos s ON sc.id_servicos = s.id_servicos;
+
+-- ALTER'S - DDL, comandos de modificação
+ALTER TABLE clientes ADD cpf VARCHAR(11);
+ALTER TABLE servico_por_cliente ADD data_servico DATE;
+ALTER TABLE servicos ALTER valor_servico SET DEFAULT 0.0;
+ALTER TABLE clientes MODIFY COLUMN whatsapp VARCHAR(16);
